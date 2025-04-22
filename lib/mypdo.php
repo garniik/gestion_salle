@@ -24,13 +24,15 @@ if (
 }
 
 // ouverture de la connexion
-$dsn = "pgsql:host=$db_host;port=$db_port;dbname=$db_name";
+$dsn = "mysql:host=$db_host;dbname=$db_name";
+if (!empty($db_port)) {
+    $dsn .= ";port=$db_port";
+}
 $db_options = array();
 
 try {
     $db = new PDO($dsn, $db_username, $db_password, $db_options);
 } catch (PDOException $e) {
-    $db = null;
-    $_SESSION['mesgs']['errors'][] = 'ERREUR Base de données: ' . $e->getMessage();
+    die("DB connexion failed: " . $e->getMessage());
 }
 return $db;

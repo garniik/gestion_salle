@@ -16,16 +16,24 @@ class Evenement
 
     public function getAll()
     {
-        
+        $stmt = $this->db->prepare("
+            SELECT * from evenement
+        ");
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function getByDate()
+    
+    public function getByDate($date)
     {
-
+        $stmt = $this->db->prepare("
+            SELECT * from evenement where date = :date
+        ");
+        $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function 
 
 }
 ?>
-

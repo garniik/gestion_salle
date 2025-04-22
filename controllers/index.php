@@ -1,3 +1,10 @@
 <?php
-    $events=["1","2","3","4"];
+
+    require_once dirname(__FILE__) . '/../class/evenement.php';
+    $evenement = new Evenement($bd);
+
+    $events = $evenement->getAll();
+
+    
+
 ?>

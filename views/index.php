@@ -13,7 +13,8 @@
                             <!-- onclick="window.location.href='./index.php?element=pages&action=Card&id=<?= urlencode($event['id']); ?>'" -->
                             <div class="card h-100 bg-dark text-light border-secondary shadow-lg rounded">            
                                 <div class="card-body">
-                                    <h5 class="card-title"> <?=htmlspecialchars($event); var_dump($event); ?> </h5>
+                                    <h5 class="card-title"> <?=htmlspecialchars($event['nom']); ?> </h5>
+                                    <p class="card-text"> <?=htmlspecialchars($event['jour']); ?> </p>
                                 </div>
                             </div>
 
