@@ -23,7 +23,7 @@
 
 
 ## methodes possibles :
-- web (node js)
+- web (php model mvc)
     - base de donnée
 
 
