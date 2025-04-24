@@ -27,13 +27,6 @@
         <?php endforeach; ?>
       </ul>
 
-      <!-- Barre de recherche -->
-      <form class="d-flex" role="search" method="POST" action="index.php?element=pages&action=Film">
-        <input class="form-control me-2" type="search" name="titre" placeholder="Rechercher un evenement" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">
-            <i class="fas fa-search"></i>
-        </button>
-      </form>
     </div>
   </div>
 </nav>
