@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container-fluid mt-4">
   <!-- Event info -->
   <div class="row">
     <div class="col-12">
@@ -25,7 +25,7 @@
         $zones = [
             'Gradins' => ['rows' => ['X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F'], 'seats' => 22],
             'Chaises' => ['rows' => ['E5', 'E4', 'E3', 'E2'], 'seats' => 25],
-            'Fosse' => ['rows' => ['E1', 'D', 'C', 'B', 'A'], 'seats' => 22],
+            'Fosse' => ['rows' => ['E1', 'D ', 'C', 'B', 'A'], 'seats' => 22],
         ];
         // Liste des places réservées
         $reservedPlaces = array_column($reservations, 'numPlace');
@@ -108,3 +108,50 @@
     </div>
   </div>
 </div>
+
+<!-- Réservation Modal -->
+<div class="modal fade" id="reserveModal" tabindex="-1" aria-labelledby="reserveModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reserveModalLabel">Réservation Place <span id="modalSeatCode"></span></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="reserveForm" method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+        <div class="modal-body">
+          <input type="hidden" name="numPlace" id="reserveNumPlace" value="">
+          <div class="mb-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" class="form-control" name="nom" id="nom" required>
+          </div>
+          <div class="mb-3">
+            <label for="prenom" class="form-label">Prénom</label>
+            <input type="text" class="form-control" name="prenom" id="prenom" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" name="reserve" class="btn btn-primary">Réserver</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Ouvre le modal de réservation au clic d'une place
+document.querySelectorAll('.reserve-seat-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var row = this.getAttribute('data-row');
+    var seat = this.getAttribute('data-seat');
+    var code = row + seat;
+    document.getElementById('modalSeatCode').textContent = code;
+    document.getElementById('reserveNumPlace').value = code;
+    document.getElementById('nom').value = '';
+    document.getElementById('prenom').value = '';
+    var modalEl = document.getElementById('reserveModal');
+    var modal = new bootstrap.Modal(modalEl);
+    modal.show();
+  });
+});
+</script>

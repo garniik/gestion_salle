@@ -97,7 +97,7 @@ class Evenement
         $stm = $this->db->prepare("
             INSERT INTO reservation (numPlace, nom, prenom, eventid) VALUES (:numPlace, :nom, :prenom, :eventid)
         ");
-        $stm->bindParam(':numPlace', $data['numPlace'], PDO::PARAM_INT);
+        $stm->bindParam(':numPlace', $data['numPlace'], PDO::PARAM_STR);
         $stm->bindParam(':nom', $data['nom'], PDO::PARAM_STR);
         $stm->bindParam(':prenom', $data['prenom'], PDO::PARAM_STR);
         $stm->bindParam(':eventid', $data['eventid'], PDO::PARAM_INT);

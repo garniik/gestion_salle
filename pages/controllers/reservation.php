@@ -9,8 +9,19 @@ $evenement = new Evenement($db);
 // Récupération des informations de l'événement
 $event = $evenement->getEventById($eventid);
 
-
-
+// Handle reservation creation
+if (isset($_POST['reserve']) && !empty($_POST['numPlace']) && !empty($_POST['nom']) && !empty($_POST['prenom'])) {
+    $data = [
+        'numPlace' => $_POST['numPlace'],
+        'nom' => trim($_POST['nom']),
+        'prenom' => trim($_POST['prenom']),
+        'eventid' => $eventid
+    ];
+    $evenement->createReservation($data);
+    header('Location: index.php?element=pages&action=reservation&id=' . urlencode($event['eventid']));
+    
+    exit;
+}
 
 if (isset($_POST['titre']) && !empty($_POST['titre'])) {
     $reservations = $evenement->getResByName($_POST['titre'], $eventid);

@@ -1,6 +1,6 @@
 <div class="container mt-4 mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-10"> <!-- Largeur ajustée pour correspondre au style du Maker -->
+        <div class="col-md-12"> <!-- Form widened -->
             <div class="card bg-dark text-light border-secondary shadow-lg">
                 <div class="card-header border-bottom text-warning">
                     <h3 class="mb-0 text-center">Créer un nouvelle evenement</h3>
