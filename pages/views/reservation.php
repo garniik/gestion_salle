@@ -4,8 +4,8 @@
     <div class="col-12">
       <div class="card bg-dark text-light border-secondary mb-4">
         <div class="card-body">
-          <h5 class="card-title"><?= htmlspecialchars($event['nom']); ?></h5>
-          <p class="card-text"><?= htmlspecialchars($event['jour']); ?></p>
+          <h5 class="card-title"><?= $event['nom']; ?></h5>
+          <p class="card-text"><?= $event['jour']; ?></p>
           <td>
             <form method="POST"  onsubmit="return confirm('Voulez-vous vraiment supprimer cette evenement ?');">
               <input type="hidden" name="delete_id" value="<?= $event['eventid'] ?>">
@@ -29,37 +29,42 @@
         ];
         // Liste des places réservées
         $reservedPlaces = array_column($reservations, 'numPlace');
-        ?>
-        <?php foreach ($zones as $zoneName => $zone): ?>
+        foreach ($zones as $zoneName => $zone): ?>
           <h3 class="mt-4 text-warning"><?= $zoneName ?></h3>
           <div class="zone-container mb-4">
-            <?php foreach ($zone['rows'] as $row): ?>
-              <div class="d-flex align-items-center mb-2">
-                <span class="me-3 fw-bold"><?= $row ?></span>
-                <?php for ($seat = 1; $seat <= $zone['seats']; $seat++): ?>
-                  <?php
-                  $code = "{$row}{$seat}";
-                  $missing = ($zoneName === 'Gradins' && (
-                      (in_array($row, ['F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O']) && in_array($seat, [3, 20]))
-                      || ($row === 'X' && $seat >= 6 && $seat <= 17)
-                  ));
-                  ?>
-                  <?php if ($missing): ?>
-                    <button class="btn btn-outline-secondary btn-sm me-1 mb-1 disabled" disabled></button>
-                  <?php elseif (in_array($code, $reservedPlaces)): ?>
-                    <button class="btn btn-danger btn-sm me-1 mb-1" disabled><?= $seat ?></button>
-                  <?php elseif (!isPlaceInRanges($row, $seat, $event['fourchette'])): ?>
-                    <button class="btn btn-secondary btn-sm me-1 mb-1 disabled" disabled><?= $seat ?></button>
-                  <?php else: ?>
-                    <button type="button" class="btn btn-outline-secondary btn-sm me-1 mb-1 reserve-seat-btn"
-                        data-row="<?= $row ?>" data-seat="<?= $seat ?>"><?= $seat ?></button>
-                  <?php endif; ?>
-                  <?php if ((($zoneName === 'Gradins' || $zoneName === 'Fosse') && ($seat === 3 || $seat === 19))): ?>
-                    <button class="btn btn-outline-secondary btn-sm me-1 mb-1 disabled" disabled></button>
-                  <?php endif; ?>
-                <?php endfor; ?>
-              </div>
-            <?php endforeach; ?>
+            <table class="seat-table table-sm">
+              <tbody>
+              <?php foreach ($zone['rows'] as $row): ?>
+                <tr>
+                  <th class="row-label"><?= $row ?></th>
+                  <?php for ($seat = 1; $seat <= $zone['seats']; $seat++):
+                    $code = "{$row}{$seat}";
+                    $missing = ($zoneName === 'Gradins' && (
+                        (in_array($row, ['F','G','H','I','J','K','L','M','N','O']) && in_array($seat, [3,20]))
+                        || ($row === 'X' && $seat >= 6 && $seat <= 17)
+                    ));
+                    ?>
+                    <td>
+                      <?php if ($missing): ?>
+                        <button class="btn btn-outline-secondary btn-sm disabled" disabled></button>
+                      <?php elseif (in_array($code, $reservedPlaces)): ?>
+                        <button class="btn btn-danger btn-sm" disabled><?= $seat ?></button>
+                      <?php elseif (!isPlaceInRanges($row, $seat, $event['fourchette'])): ?>
+                        <button class="btn btn-secondary btn-sm disabled" disabled><?= $seat ?></button>
+                      <?php else: ?>
+                        <button type="button" class="btn btn-outline-secondary btn-sm reserve-seat-btn" data-row="<?= $row ?>" data-seat="<?= $seat ?>"><?= $seat ?></button>
+                      <?php endif; ?>
+                    </td>
+                    <?php if (($zoneName === 'Gradins' || $zoneName === 'Fosse') && ($seat === 3 || $seat === 19)): ?>
+                      <td>
+                        <button class="btn btn-outline-secondary btn-sm disabled" disabled></button>
+                      </td>
+                    <?php endif;
+                      endfor; ?>
+                </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
           </div>
         <?php endforeach; ?>
       </div>
@@ -69,7 +74,7 @@
       <div class="card bg-dark text-light border-secondary mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h2 class="text-warning mb-0">Listes des reservations</h2>
-          <form class="d-flex" role="search" method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+          <form class="d-flex" role="search" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
             <input class="form-control me-2" type="search" name="titre" placeholder="Recherche" aria-label="Search">
             <button class="btn btn-outline-light" type="submit">
               <i class="fas fa-search"></i>
@@ -87,11 +92,11 @@
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($reservations as $res): ?>
-                <?php $code = htmlspecialchars($res['numPlace']); ?>
+              <?php foreach ($reservations as $res):
+                $code = $res['numPlace']; ?>
                 <tr data-resid="<?= $res['Resid'] ?>">
-                  <td><?= htmlspecialchars($res['nom']) ?></td>
-                  <td><?= htmlspecialchars($res['prenom']) ?></td>
+                  <td><?= $res['nom'] ?></td>
+                  <td><?= $res['prenom'] ?></td>
                   <td><?= $code ?></td>
                   <td>
                     <form method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette réservation ?');">
@@ -117,7 +122,7 @@
         <h5 class="modal-title" id="reserveModalLabel">Réservation Place <span id="modalSeatCode"></span></h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="reserveForm" method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+      <form id="reserveForm" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
         <div class="modal-body">
           <input type="hidden" name="numPlace" id="reserveNumPlace" value="">
           <div class="mb-3">

@@ -1,9 +1,4 @@
 
-<!-- MLD:
-evenement = (eventid INT, nom VARCHAR(50), jour DATE, fourchette VARCHAR(50));
-reservation = (Resid INT, numPlace INT, nom VARCHAR(50), prenom VARCHAR(50), #eventid*);
- -->
-
 
 <?php
 class Evenement
@@ -21,6 +16,10 @@ class Evenement
         return $this->data[$key] ?? null;
     }
 
+    /**
+     * Récupère tous les evenements
+     * @return array
+     */
     public function getAll()
     {
         $stmt = $this->db->prepare("
@@ -30,7 +29,12 @@ class Evenement
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
+    /**
+     * Récupère les evenements par date
+     * @param string $date
+     * @return array
+     */
     public function getEventByDate($date)
     {
         $stmt = $this->db->prepare("
@@ -42,6 +46,11 @@ class Evenement
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Récupère les réservations d'un evenement
+     * @param int $eventid
+     * @return array
+     */
     public function getReservation($eventid)
     {
         $stmt = $this->db->prepare("
@@ -52,6 +61,10 @@ class Evenement
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Crée un evenement
+     * @param array $data
+     */
     public function createEvent($data)
     {
         $stmt = $this->db->prepare("
@@ -63,6 +76,10 @@ class Evenement
         $stmt->execute();
     }
 
+    /**
+     * Met à jour un evenement
+     * @param array $data
+     */
     public function updateEvent($data)
     {
         $stmt = $this->db->prepare("
@@ -75,6 +92,10 @@ class Evenement
         $stmt->execute();
     }
 
+    /**
+     * Supprime un evenement 
+     * @param int $eventid
+     */
     public function deleteEvent($eventid)
     {
         $stmt = $this->db->prepare("DELETE FROM evenement WHERE eventid = :eventid " );
@@ -82,6 +103,11 @@ class Evenement
         $stmt->execute();
     }
 
+    /**
+     * Récupère un evenement par son id
+     * @param int $eventid
+     * @return array
+     */ 
     public function getEventById($eventid)
     {
         $stmt = $this->db->prepare("
@@ -92,6 +118,10 @@ class Evenement
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Crée une reservation
+     * @param array $data
+     */
     public function createReservation($data)
     {
         $stm = $this->db->prepare("
@@ -116,7 +146,7 @@ class Evenement
     }  
 
     /**
-     * Search events by name (partial match)
+     * Recherche une evenement par son nom
      * @param string $name
      * @return array
      */
@@ -132,7 +162,12 @@ class Evenement
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Add method to search reservations by name within an event
+    /**
+     * Recherche une reservation par son nom
+     * @param string $name
+     * @param int $eventid
+     * @return array
+     */
     public function getResByName($name, $eventid)
     {
         $stmt = $this->db->prepare(

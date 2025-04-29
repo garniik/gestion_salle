@@ -19,8 +19,8 @@
                             <a href="index.php?element=pages&action=reservation&id=<?= urlencode($event['eventid']);  ?>" class="text-decoration-none">
                                 <div class="card event-card h-100 bg-dark text-light border-secondary shadow-lg rounded">            
                                     <div class="card-body">
-                                        <h5 class="card-title"> <?=htmlspecialchars($event['nom']); ?> </h5>
-                                        <p class="card-text"> <?=htmlspecialchars($event['jour']); ?> </p>
+                                        <h5 class="card-title"> <?= $event['nom']; ?> </h5>
+                                        <p class="card-text"> <?= $event['jour']; ?> </p>
                                     </div>
                                 </div>
                             </a>
