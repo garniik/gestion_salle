@@ -5,7 +5,6 @@ $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nomEvent = trim($_POST['nomEvent'] ?? '');
     $dateEvent = $_POST['dateEvent'] ?? '';
-    // Vérification nom et date
     if (empty($nomEvent) || empty($dateEvent)) {
         $message = 'Erreur: veuillez renseigner le nom et la date de l\'événement.';
     } else {

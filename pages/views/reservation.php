@@ -1,5 +1,5 @@
 <div class="container-fluid mt-4">
-  <!-- Event info -->
+  <!-- Information evenements -->
   <div class="row">
     <div class="col-12">
       <div class="card bg-dark text-light border-secondary mb-4">
@@ -16,46 +16,45 @@
       </div>
     </div>
   </div>
-  <!-- Seats and reservations side by side -->
+
   <div class="row">
-    <!-- Seat grid (left) -->
+    <!-- Grilles des sièges-->
     <div class="col-md-8">
       <div class="zones-container">
         <?php
         $zones = [
-            'Gradins' => ['rows' => ['X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F'], 'seats' => 22],
-            'Chaises' => ['rows' => ['E5', 'E4', 'E3', 'E2'], 'seats' => 25],
-            'Fosse' => ['rows' => ['E1', 'D ', 'C', 'B', 'A'], 'seats' => 22],
+            'Gradins' => ['rows' => ['X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F'], 'place' => 22],
+            'Chaises' => ['rows' => ['E5', 'E4', 'E3', 'E2'], 'place' => 25],
+            'Fosse' => ['rows' => ['E1', 'D ', 'C', 'B', 'A'], 'place' => 22],
         ];
-        // Liste des places réservées
         $reservedPlaces = array_column($reservations, 'numPlace');
         foreach ($zones as $zoneName => $zone): ?>
           <h3 class="mt-4 text-warning"><?= $zoneName ?></h3>
           <div class="zone-container mb-4">
-            <table class="seat-table table-sm">
+            <table class="table-sm">
               <tbody>
               <?php foreach ($zone['rows'] as $row): ?>
                 <tr>
                   <th class="row-label"><?= $row ?></th>
-                  <?php for ($seat = 1; $seat <= $zone['seats']; $seat++):
-                    $code = "{$row}{$seat}";
+                  <?php for ($place = 1; $place <= $zone['place']; $place++):
+                    $code = "{$row}{$place}";
                     $missing = ($zoneName === 'Gradins' && (
-                        (in_array($row, ['F','G','H','I','J','K','L','M','N','O']) && in_array($seat, [3,20]))
-                        || ($row === 'X' && $seat >= 6 && $seat <= 17)
+                        (in_array($row, ['F','G','H','I','J','K','L','M','N','O']) && in_array($place, [3,20]))
+                        || ($row === 'X' && $place >= 6 && $place <= 17)
                     ));
                     ?>
                     <td>
                       <?php if ($missing): ?>
                         <button class="btn btn-outline-secondary btn-sm disabled" disabled></button>
                       <?php elseif (in_array($code, $reservedPlaces)): ?>
-                        <button class="btn btn-danger btn-sm" disabled><?= $seat ?></button>
-                      <?php elseif (!isPlaceInRanges($row, $seat, $event['fourchette'])): ?>
-                        <button class="btn btn-secondary btn-sm disabled" disabled><?= $seat ?></button>
+                        <button class="btn btn-danger btn-sm" disabled><?= $place ?></button>
+                      <?php elseif (!isPlaceInRanges($row, $place, $event['fourchette'])): ?>
+                        <button class="btn btn-secondary btn-sm disabled" disabled><?= $place ?></button>
                       <?php else: ?>
-                        <button type="button" class="btn btn-outline-secondary btn-sm reserve-seat-btn" data-row="<?= $row ?>" data-seat="<?= $seat ?>"><?= $seat ?></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm reserve-place-btn" data-row="<?= $row ?>" data-place="<?= $place ?>"><?= $place ?></button>
                       <?php endif; ?>
                     </td>
-                    <?php if (($zoneName === 'Gradins' || $zoneName === 'Fosse') && ($seat === 3 || $seat === 19)): ?>
+                    <?php if (($zoneName === 'Gradins' || $zoneName === 'Fosse') && ($place === 3 || $place === 19)): ?>
                       <td>
                         <button class="btn btn-outline-secondary btn-sm disabled" disabled></button>
                       </td>
@@ -69,7 +68,7 @@
         <?php endforeach; ?>
       </div>
     </div>
-    <!-- Reservation list (right) -->
+    <!-- Liste des reservations -->
     <div class="col-md-4">
       <div class="card bg-dark text-light border-secondary mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -114,12 +113,12 @@
   </div>
 </div>
 
-<!-- Réservation Modal -->
+<!-- Réservation-->
 <div class="modal fade" id="reserveModal" tabindex="-1" aria-labelledby="reserveModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content bg-dark text-light">
       <div class="modal-header">
-        <h5 class="modal-title" id="reserveModalLabel">Réservation Place <span id="modalSeatCode"></span></h5>
+        <h5 class="modal-title" id="reserveModalLabel">Réservation Place <span id="modalplaceCode"></span></h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id="reserveForm" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
@@ -144,13 +143,12 @@
 </div>
 
 <script>
-// Ouvre le modal de réservation au clic d'une place
-document.querySelectorAll('.reserve-seat-btn').forEach(function(btn) {
+document.querySelectorAll('.reserve-place-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     var row = this.getAttribute('data-row');
-    var seat = this.getAttribute('data-seat');
-    var code = row + seat;
-    document.getElementById('modalSeatCode').textContent = code;
+    var place = this.getAttribute('data-place');
+    var code = row + place;
+    document.getElementById('modalplaceCode').textContent = code;
     document.getElementById('reserveNumPlace').value = code;
     document.getElementById('nom').value = '';
     document.getElementById('prenom').value = '';

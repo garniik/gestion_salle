@@ -1,6 +1,16 @@
 <?php
 $action = GETPOST('action') ?? 'index';
 $element = GETPOST('element') ?? ".";
+if ($action === 'login') {
+    include dirname(__FILE__) . '/../pages/controllers/login.php';
+    include dirname(__FILE__) . '/../pages/views/login.php';
+    exit;
+}
+require_once dirname(__FILE__) . '/../class/myAuthClass.php';
+if (!myAuthClass::is_auth($_SESSION)) {
+    header('Location: index.php?action=login');
+    exit;
+}
 $target_c = (dirname(__FILE__) . "/../$element/controllers/$action.php");
 $target_v = (dirname(__FILE__) . "/../$element/views/$action.php");
 if (

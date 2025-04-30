@@ -34,14 +34,14 @@ body {
   padding: 0.5rem 1rem;
 }
 .navbar .navbar-brand,
-.navbar .nav-link { color: var(--primary) !important; }
-.navbar .nav-link:hover { color: var(--text-light) !important; }
+.navbar .nav-link { color: var(--primary) ; }
+.navbar .nav-link:hover { color: var(--text-light) ; }
 
 /* Cards */
 .card {
   background: var(--bg-dark);
   color: var(--text-light);
-  border: 1px solid var(--border) !important;
+  border: 1px solid var(--border) ;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -52,8 +52,7 @@ body {
 
 /* Event cards only */
 .card.event-card:hover { 
-  transform: translateY(0) !important;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.4) !important;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.4) ;
 }
 
 /* Buttons */
@@ -81,7 +80,7 @@ body {
   opacity: 0.9; 
 }
 
-/* Seat grid */
+/* place grid */
 .zones-container {
    margin-top: 1rem;
    }
@@ -97,21 +96,4 @@ body {
 }
 
 
-.seat-table { 
-  width: 100%; border-collapse: separate; border-spacing: 0.25rem;
- }
 
-
-.seat-table th, .seat-table td { 
-  padding: 0; text-align: center; background: transparent; 
-}
-
-
-.reserve-seat-btn { 
-  background: transparent; border: 1px solid var(--border); color: var(--text-dark);
- }
-
-
-.reserve-seat-btn:hover { 
-  background: var(--primary); color: var(--text-dark);
- }

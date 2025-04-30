@@ -10,5 +10,6 @@ if (GETPOST('debug') == true) {
     ini_set('display_startup_errors', 1);
 }
 
+
 include 'main.inc.php';
 ob_end_flush();

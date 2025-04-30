@@ -1,15 +1,12 @@
 <?php
 require_once __DIR__ . '/../../class/evenement.php';
 
-// Récupération de l'id de l'événement
 $eventid = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 $evenement = new Evenement($db);
 
-// Récupération des informations de l'événement
 $event = $evenement->getEventById($eventid);
 
-// Handle reservation creation
 if (isset($_POST['reserve']) && !empty($_POST['numPlace']) && !empty($_POST['nom']) && !empty($_POST['prenom'])) {
     $data = [
         'numPlace' => $_POST['numPlace'],
@@ -30,7 +27,7 @@ if (isset($_POST['titre']) && !empty($_POST['titre'])) {
 }
 
 
-function isPlaceInRanges($row, $seat, $rangesStr) {
+function isPlaceInRanges($row, $place, $rangesStr) {
     $ranges = explode(',', $rangesStr);
     foreach ($ranges as $range) {
         if (preg_match('/^([A-Z0-9]+):(\d+)-([A-Z0-9]+):(\d+)$/', $range, $m)) {
@@ -46,9 +43,9 @@ function isPlaceInRanges($row, $seat, $rangesStr) {
                 ($startIdx == $endIdx && $startNum <= $endNum)) {
                 if (
                     ($rowIdx > $startIdx && $rowIdx < $endIdx) ||
-                    ($rowIdx == $startIdx && $rowIdx == $endIdx && $seat >= $startNum && $seat <= $endNum) ||
-                    ($rowIdx == $startIdx && $rowIdx != $endIdx && $seat >= $startNum) ||
-                    ($rowIdx == $endIdx && $rowIdx != $startIdx && $seat <= $endNum)
+                    ($rowIdx == $startIdx && $rowIdx == $endIdx && $place >= $startNum && $place <= $endNum) ||
+                    ($rowIdx == $startIdx && $rowIdx != $endIdx && $place >= $startNum) ||
+                    ($rowIdx == $endIdx && $rowIdx != $startIdx && $place <= $endNum)
                 ) {
                     return true;
                 }

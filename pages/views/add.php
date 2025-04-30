@@ -66,7 +66,6 @@
                             </div>
                         </div>
                         <button type="button" class="btn btn-outline-light mb-3" id="addRangeBtn">+ Ajouter une fourchette</button>
-                        <!-- Boutons -->
                         <div class="d-flex justify-content-between mt-4">
                             <button type="submit" class="btn btn-warning">Créer</button>
                         </div>
@@ -98,7 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const newBlk = first.cloneNode(true);
         newBlk.querySelectorAll('input, select').forEach(el => el.value = '');
         newBlk.querySelector('select[name="rowEnd[]"]').innerHTML = '<option value="">Sélectionner</option>';
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn btn-outline-danger removeRangeBtn mb-3';
+        removeBtn.textContent = 'Retirer cette fourchette';
+        newBlk.append(removeBtn);
         placeRanges.append(newBlk);
+    });
+    placeRanges.addEventListener('click', e => {
+        if (e.target.classList.contains('removeRangeBtn')) {
+            e.target.closest('.range-block').remove();
+        }
     });
 });
 </script>
