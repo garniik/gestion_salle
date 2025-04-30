@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                     <?php if (!empty($message)): ?>
-                        <div class="alert <?= strpos($message, 'Erreur') === false ? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
+                        <div class="alert <?= strpos($message, 'Erreur') === false ? 'alert-danger' : 'alert-success' ?> alert-dismissible fade show" role="alert">
                             <?= $message ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -15,8 +15,8 @@
                     <form method="POST" novalidate>
                         <!-- Nom utilisateur -->
                         <div class="mb-3">
-                            <label for="nomUser" class="form-label ">Nom d'utilisateur <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control bg-dark text-light border-secondary" id="nomUser" name="nomUser" required>
+                            <label for="Username" class="form-label ">Nom d'utilisateur <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control bg-dark text-light border-secondary" id="Username" name="Username" required>
                             <div class="invalid-feedback">
                                 Veuillez entrer un nom d'utilisateur.
                             </div>

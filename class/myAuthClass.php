@@ -1,5 +1,3 @@
-mpUser = (idUser INT, userName VARCHAR(50), password VARCHAR(50));
-
 <?php
 class myAuthClass
 {
@@ -16,10 +14,9 @@ class myAuthClass
         $fields = array(
             'rowid',
             'username',
-            'password'
         );
         $sql = 'SELECT '.implode(', ', $fields).' ';
-        $sql .= 'FROM mp_users ';
+        $sql .= 'FROM mpUers ';
         $sql .= 'WHERE username = :username AND password = :password';
         $statement = $db->prepare($sql);
         $statement->bindValue(':username', $username, PDO::PARAM_STR); 
