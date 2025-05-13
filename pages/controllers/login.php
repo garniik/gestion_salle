@@ -29,9 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $psw = $_POST['password'] ?? '';
 
 
-    if ($db) {
+    if (empty($uname) || empty($psw)) {
+        $_SESSION['mesgs']['errors'][] = 'Veuillez remplir tous les champs.';
+    } elseif ($db) {
         $userconnect = $user->getUser($uname);
-        if ($userconnect && password_verify($psw, $userconnect['password'])) {
+        if (is_array($userconnect) && password_verify($psw, $userconnect['password'])) {
             // Connexion réussie
             $_SESSION['mesgs']['confirm'][] = 'Connexion réussie ' . htmlspecialchars($userconnect['username']);
             $_SESSION['login'] = $userconnect['username'];
@@ -47,4 +49,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['mesgs']['errors'][] = 'Erreur de connexion à la base de données.';
     }
 }
-?>
+?>  

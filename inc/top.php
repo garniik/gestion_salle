@@ -25,6 +25,11 @@
             <a class="nav-link" href="index.php?element=pages&action=<?= urlencode($key); ?>"><?= htmlspecialchars($menu); ?></a>
           </li>
         <?php endforeach; ?>
+        <?php if (!empty($_SESSION['authenticated'])): ?>
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="index.php?action=logout">Déconnexion</a>
+          </li>
+        <?php endif; ?>
       </ul>
 
     </div>

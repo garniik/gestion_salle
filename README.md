@@ -42,3 +42,12 @@
     - id evenement
 
 
+## soucis a reglé :
+- bug connexion champ vides
+- responsive pas correcte
+    - revoir affichage liste reservation
+- liste reservation 
+    - si chercher place alors pas de resultat
+    - n'affiche que les places afficher dans la liste (si recherche une personne une seul place visible)
+        - possibilité de reservé 10x la meme place avec ce bug
+    

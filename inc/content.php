@@ -1,6 +1,13 @@
 <?php
 $action = GETPOST('action') ?? 'index';
 $element = GETPOST('element') ?? ".";
+// Déconnexion
+if (GETPOST('action') === 'logout') {
+    session_unset();
+    session_destroy();
+    header('Location: index.php?action=login');
+    exit;
+}
 if ($action === 'login') {
     include dirname(__FILE__) . '/../pages/controllers/login.php';
     include dirname(__FILE__) . '/../pages/views/login.php';

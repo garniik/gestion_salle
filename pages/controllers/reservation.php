@@ -58,6 +58,8 @@ function isPlaceInRanges($row, $place, $rangesStr) {
 if (isset($_POST['deleteRes']) && isset($_POST['delete_id'])) {
     $id = intval($_POST['delete_id']);
     $evenement->deleteReservation($id);
+    header('Location: index.php?element=pages&action=reservation&id=' . urlencode($eventid));
+    exit;
 }
 
 if (isset($_POST['deleteEvent']) && isset($_POST['delete_id'])) {

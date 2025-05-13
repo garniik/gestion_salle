@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-12">
       <div class="card bg-dark text-light border-secondary mb-4">
-        <div class="card-body">
+        <div class="card-body ">
           <h5 class="card-title"><?= $event['nom']; ?></h5>
           <p class="card-text"><?= $event['jour']; ?></p>
           <td>
@@ -17,9 +17,8 @@
     </div>
   </div>
 
-  <div class="row">
     <!-- Grilles des sièges-->
-    <div class="col-md-8">
+    <div class="col-12">
       <div class="zones-container">
         <?php
         $zones = [
@@ -27,10 +26,11 @@
             'Chaises' => ['rows' => ['E5', 'E4', 'E3', 'E2'], 'place' => 25],
             'Fosse' => ['rows' => ['E1', 'D ', 'C', 'B', 'A'], 'place' => 22],
         ];
-        $reservedPlaces = array_column($reservations, 'numPlace');
+        // Always mark all reserved seats in grid, even when list is filtered
+        $reservedPlaces = array_column($evenement->getReservation($eventid), 'numPlace');
         foreach ($zones as $zoneName => $zone): ?>
-          <h3 class="mt-4 text-warning"><?= $zoneName ?></h3>
-          <div class="zone-container mb-4">
+          <h3 class="mt-4 text-center"><?= $zoneName ?></h3>
+          <div class="zone-container mb-4 d-flex justify-content-center">
             <table class="table-sm">
               <tbody>
               <?php foreach ($zone['rows'] as $row): ?>
@@ -67,9 +67,10 @@
           </div>
         <?php endforeach; ?>
       </div>
-    </div>
+
+  </div>
     <!-- Liste des reservations -->
-    <div class="col-md-4">
+  <div class="col-12">
       <div class="card bg-dark text-light border-secondary mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h2 class="text-warning mb-0">Listes des reservations</h2>
@@ -81,7 +82,7 @@
           </form>
         </div>
         <div class="card-body">
-          <table id="reservationsTable" class="table table-dark table-striped">
+          <table id="reservationsTable" class="table table-dark table-striped text-center">
             <thead>
               <tr>
                 <th>Nom</th>
@@ -110,7 +111,6 @@
         </div>
       </div>
     </div>
-  </div>
 </div>
 
 <!-- Réservation-->
