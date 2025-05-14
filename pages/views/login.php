@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                     <?php if (!empty($message)): ?>
-                        <div class="alert <?= strpos($message, 'Erreur') === false ? 'alert-danger' : 'alert-success' ?> alert-dismissible fade show" role="alert">
+                        <div class="alert alert-<?= htmlspecialchars($messageType) ?> alert-dismissible fade show" role="alert">
                             <?= $message ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>

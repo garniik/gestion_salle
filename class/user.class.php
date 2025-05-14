@@ -9,7 +9,7 @@ class User {
         $this->rowid = $rowid;
     }
 
-    public function createUser($username, $password, $firstname, $lastname, $admin = 0) {
+    public function createUser($username, $password) {
         try {
             // Vérifier si le nom d'utilisateur existe déjà
             $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM mpUser WHERE username = :username");
@@ -21,17 +21,13 @@ class User {
             // Hacher le mot de passe avec bcrypt
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            // Insérer l'utilisateur dans la base de données
+            // Insérer l'utilisateur dans la base de données (sans firstname/lastname/admin)
             $stmt = $this->pdo->prepare(
-                "INSERT INTO mpUser (username, password, firstname, lastname, admin) 
-                 VALUES (:username, :password, :firstname, :lastname, :admin)"
+                "INSERT INTO mpUser (username, password) VALUES (:username, :password)"
             );
             $stmt->execute([
                 ':username' => $username,
                 ':password' => $hashedPassword,
-                ':firstname' => $firstname,
-                ':lastname' => $lastname,
-                ':admin' => $admin,
             ]);
 
             return "Utilisateur créé avec succès.";
@@ -43,21 +39,16 @@ class User {
     public function getUser($username) {
         try {
             $stmt = $this->pdo->prepare(
-                "SELECT * 
-                 FROM mpUser 
-                 WHERE username = :username"
+                "SELECT * FROM mpUser WHERE username = :username"
             );
             $stmt->execute([':username' => $username]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($user) {
-                return $user;
-            } else {
-                return "Utilisateur non trouvé.";
-            }
+            return $user ?: false;
         } catch (PDOException $e) {
-            return "Erreur lors de la récupération de l'utilisateur : " . $e->getMessage();
+            return false;
         }
     }
+    
 }
 ?>
 
@@ -66,5 +57,3 @@ class User {
 
     
     
-
-
