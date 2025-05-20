@@ -9,3 +9,4 @@ if (!$authorized) {
     include dirname(__FILE__).'/../login.php';
     exit(1);
 }
+    

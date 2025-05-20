@@ -28,7 +28,6 @@
             'Chaises' => ['rows' => ['E5', 'E4', 'E3', 'E2'], 'place' => 25],
             'Fosse' => ['rows' => ['E1', 'D ', 'C', 'B', 'A'], 'place' => 22],
         ];
-        // Always mark all reserved seats in grid, even when list is filtered
         $reservedPlaces = array_column($evenement->getReservation($eventid), 'numPlace');
         foreach ($zones as $zoneName => $zone): ?>
           <h3 class="mt-4 text-center"><?= $zoneName ?></h3>
