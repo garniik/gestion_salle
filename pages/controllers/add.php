@@ -3,10 +3,11 @@ require_once __DIR__ . '/../../class/evenement.php';
 
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nomEvent = trim($_POST['nomEvent'] ?? '');
-    $dateEvent = $_POST['dateEvent'] ?? '';
-    if (empty($nomEvent) || empty($dateEvent)) {
-        $message = 'Erreur: veuillez renseigner le nom et la date de l\'événement.';
+    $nomEvent   = trim($_POST['nomEvent'] ?? '');
+    $dateEvent  = $_POST['dateEvent'] ?? '';
+    $prixPlace  = trim($_POST['prixPlace'] ?? '');
+    if (empty($nomEvent) || empty($dateEvent) || empty($prixPlace)) {
+        $message = 'Erreur: veuillez renseigner le nom, la date et le prix de l\'événement.';
     } else {
         $rowStart = $_POST['rowStart'] ?? [];
         $rowEnd = $_POST['rowEnd'] ?? [];
@@ -34,9 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $evenement = new Evenement($db);
                 $evenement->createEvent([
-                    'eventName' => $nomEvent,
-                    'eventDate' => $dateEvent,
-                    'fourchetteNumPlace' => $fourchettes,
+                    'eventName'         => $nomEvent,
+                    'eventDate'         => $dateEvent,
+                    'fourchetteNumPlace'=> $fourchettes,
+                    'prixPlace'         => $prixPlace,
                 ]);
                 $message = 'Evénement créé avec succès.';
             } catch (Exception $e) {

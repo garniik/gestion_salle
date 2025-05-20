@@ -3,9 +3,11 @@
   <div class="row">
     <div class="col-12">
       <div class="card bg-dark text-light border-secondary mb-4">
-        <div class="card-body ">
+        <div class="card-body   ">
           <h5 class="card-title"><?= $event['nom']; ?></h5>
           <p class="card-text"><?= $event['jour']; ?></p>
+          <p class="card-text">Prix place : <?= htmlspecialchars($event['prix'] ?? 0) ?> €</p>
+          <p class="card-text">Total collecté : <?= htmlspecialchars(number_format((count($reservations) * ($event['prix'] ?? 0)), 2, ',', ' ')) ?> €</p>
           <td>
             <form method="POST"  onsubmit="return confirm('Voulez-vous vraiment supprimer cette evenement ?');">
               <input type="hidden" name="delete_id" value="<?= $event['eventid'] ?>">
@@ -73,7 +75,7 @@
   <div class="col-12">
       <div class="card bg-dark text-light border-secondary mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h2 class="text-warning mb-0">Listes des reservations</h2>
+          <h2 class="mb-0">Listes des reservations</h2>
           <form class="d-flex" role="search" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
             <input class="form-control me-2" type="search" name="titre" placeholder="Recherche" aria-label="Search">
             <button class="btn btn-outline-light" type="submit">
@@ -87,6 +89,9 @@
               <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Adresse</th>
                 <th>Place</th>
                 <th>Action</th>
               </tr>
@@ -95,8 +100,11 @@
               <?php foreach ($reservations as $res):
                 $code = $res['numPlace']; ?>
                 <tr data-resid="<?= $res['Resid'] ?>">
-                  <td><?= $res['nom'] ?></td>
-                  <td><?= $res['prenom'] ?></td>
+                  <td><?= htmlspecialchars($res['nom'] ?? '') ?></td>
+                  <td><?= htmlspecialchars($res['prenom'] ?? '') ?></td>
+                  <td><?= htmlspecialchars($res['telephone'] ?? '') ?></td>
+                  <td><?= htmlspecialchars($res['email'] ?? '') ?></td>
+                  <td><?= htmlspecialchars($res['adresse'] ?? '') ?></td>
                   <td><?= $code ?></td>
                   <td>
                     <form method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette réservation ?');">
@@ -131,6 +139,18 @@
           <div class="mb-3">
             <label for="prenom" class="form-label">Prénom</label>
             <input type="text" class="form-control" name="prenom" id="prenom" required>
+          </div>
+          <div class="mb-3">
+            <label for="numTel" class="form-label">Numéro de téléphone</label>
+            <input type="text" class="form-control" name="numTel" id="numTel" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="adresse" class="form-label">Adresse</label>
+            <input type="text" class="form-control" name="adresse" id="adresse" required>
           </div>
         </div>
         <div class="modal-footer">

@@ -7,11 +7,14 @@ $evenement = new Evenement($db);
 
 $event = $evenement->getEventById($eventid);
 
-if (isset($_POST['reserve']) && !empty($_POST['numPlace']) && !empty($_POST['nom']) && !empty($_POST['prenom'])) {
+if (isset($_POST['reserve']) && !empty($_POST['numPlace']) && !empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['numTel']) && !empty($_POST['email']) && !empty($_POST['adresse'])) {
     $data = [
         'numPlace' => $_POST['numPlace'],
         'nom' => trim($_POST['nom']),
         'prenom' => trim($_POST['prenom']),
+        'telephone' => trim($_POST['numTel']),
+        'email' => trim($_POST['email']),
+        'adresse' => trim($_POST['adresse']),
         'eventid' => $eventid
     ];
     $evenement->createReservation($data);

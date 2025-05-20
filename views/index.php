@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card-header d-flex justify-content-between align-items-center">
                 
-                <h2 class="text-warning mb-0">Listes des evenements</h2>
+                <h2 class="mb-0">Listes des evenements</h2>
                 <form class="d-flex" role="search" method="POST" action="index.php">
                     <input class="form-control me-2" type="search" name="titre" placeholder="Rechercher un evenement" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">

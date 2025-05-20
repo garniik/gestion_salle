@@ -1,5 +1,3 @@
-
-
 <?php
 class Evenement
 {
@@ -68,11 +66,12 @@ class Evenement
     public function createEvent($data)
     {
         $stmt = $this->db->prepare("
-            INSERT INTO evenement (nom, jour , fourchette) VALUES (:nom, :date, :fourchetteNumPlace)
+            INSERT INTO evenement (nom, jour, fourchette, prix) VALUES (:nom, :date, :fourchetteNumPlace, :prixPlace)
         ");
         $stmt->bindParam(':nom', $data['eventName'], PDO::PARAM_STR);
         $stmt->bindParam(':date', $data['eventDate'], PDO::PARAM_STR);
         $stmt->bindParam(':fourchetteNumPlace', $data['fourchetteNumPlace'], PDO::PARAM_STR);
+        $stmt->bindParam(':prixPlace', $data['prixPlace'], PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -83,11 +82,12 @@ class Evenement
     public function updateEvent($data)
     {
         $stmt = $this->db->prepare("
-            UPDATE evenement SET nom = :nom, jour = :date, fourchette = :fourchetteNumPlace WHERE eventid = :eventid
+            UPDATE evenement SET nom = :nom, jour = :date, fourchette = :fourchetteNumPlace, prix = :prixPlace WHERE eventid = :eventid
         ");
         $stmt->bindParam(':nom', $data['eventName'], PDO::PARAM_STR);
         $stmt->bindParam(':date', $data['eventDate'], PDO::PARAM_STR);
         $stmt->bindParam(':fourchette', $data['fourchetteNumPlace'], PDO::PARAM_STR);
+        $stmt->bindParam(':prixPlace', $data['prixPlace'], PDO::PARAM_STR);
         $stmt->bindParam(':eventid', $data['eventid'], PDO::PARAM_INT);
         $stmt->execute();
     }
@@ -125,11 +125,15 @@ class Evenement
     public function createReservation($data)
     {
         $stm = $this->db->prepare("
-            INSERT INTO reservation (numPlace, nom, prenom, eventid) VALUES (:numPlace, :nom, :prenom, :eventid)
+            INSERT INTO reservation (numPlace, nom, prenom, telephone, email, adresse, eventid)
+            VALUES (:numPlace, :nom, :prenom, :telephone, :email, :adresse, :eventid)
         ");
         $stm->bindParam(':numPlace', $data['numPlace'], PDO::PARAM_STR);
         $stm->bindParam(':nom', $data['nom'], PDO::PARAM_STR);
         $stm->bindParam(':prenom', $data['prenom'], PDO::PARAM_STR);
+        $stm->bindParam(':telephone', $data['telephone'], PDO::PARAM_STR);
+        $stm->bindParam(':email', $data['email'], PDO::PARAM_STR);
+        $stm->bindParam(':adresse', $data['adresse'], PDO::PARAM_STR);
         $stm->bindParam(':eventid', $data['eventid'], PDO::PARAM_INT);
         $stm->execute();
     }

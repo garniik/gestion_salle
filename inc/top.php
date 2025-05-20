@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <!-- Logo -->
-    <a class="navbar-brand fw-bold text-warning" href="index.php">
+    <a class="navbar-brand fw-bold" href="index.php">
 
       Gestionnaire d'evenements
     </a>

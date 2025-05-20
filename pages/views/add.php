@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card bg-dark text-light border-secondary shadow-lg">
-                <div class="card-header border-bottom text-warning">
+                <div class="card-header border-bottom ">
                     <h3 class="mb-0 text-center">Créer un nouvelle evenement</h3>
                 </div>
                 <div class="card-body">
@@ -27,6 +27,14 @@
                             <input type="date" class="form-control bg-dark text-light border-secondary" id="dateEvent" name="dateEvent" required>
                             <div class="invalid-feedback">
                                 Veuillez entrer une date.
+                            </div>
+                        </div>
+                        <!-- prix place -->
+                        <div class="mb-3">
+                            <label for="prixPlace" class="form-label">Prix de la place <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" class="form-control bg-dark text-light border-secondary" id="prixPlace" name="prixPlace" required>
+                            <div class="invalid-feedback">
+                                Veuillez entrer un prix.
                             </div>
                         </div>
                         <!-- fourchettes place disponible -->
@@ -67,7 +75,7 @@
                         </div>
                         <button type="button" class="btn btn-outline-light mb-3" id="addRangeBtn">+ Ajouter une fourchette</button>
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="submit" class="btn btn-warning">Créer</button>
+                            <button type="submit" class="btn btn-primary">Créer</button>
                         </div>
                     </form>
                 </div>

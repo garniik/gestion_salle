@@ -2,12 +2,12 @@
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto">
             <div class="card bg-dark text-light border-secondary shadow-lg">
-                <div class="card-header border-bottom text-warning">
+                <div class="card-header border-bottom">
                     <h3 class="mb-0 text-center">Se connecter</h3>
                 </div>
                 <div class="card-body">
                     <?php if (!empty($message)): ?>
-                        <div class="alert alert-<?= htmlspecialchars($messageType) ?> alert-dismissible fade show" role="alert">
+                        <div class="alert <?= strpos($message, 'Erreur') === false ? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
                             <?= $message ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="submit" class="btn btn-warning">Se connecter</button>
+                            <button type="submit" class="btn btn-primary">Se connecter</button>
                         </div>
                     </form>
                 </div>

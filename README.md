@@ -45,4 +45,11 @@
 ## soucis a reglé :
 - liste reservation 
     - si chercher place alors pas de resultat
+- reservation:
+    - num tel 
+    - adresse email
+    - adresse
+- evenement :
+    - prix reservation 
+    - argent total place prise (card)
     
