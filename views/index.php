@@ -4,12 +4,9 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 
                 <h2 class="mb-0">Listes des evenements</h2>
-                <form class="d-flex" role="search" method="POST" action="index.php">
-                    <input class="form-control me-2" type="search" name="titre" placeholder="Rechercher un evenement" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
+                <div class="d-flex">
+                    <input id="event-search" class="form-control me-2" type="search" placeholder="Rechercher un evenement" aria-label="Search">
+                </div>
             </div>
             <div class="card-body">
                 <div

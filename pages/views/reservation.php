@@ -75,12 +75,9 @@
       <div class="card bg-dark text-light border-secondary mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h2 class="mb-0">Listes des reservations</h2>
-          <form class="d-flex" role="search" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
-            <input class="form-control me-2" type="search" name="titre" placeholder="Recherche" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </form>
+          <div class="d-flex">
+            <input id="reservation-search" class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
+          </div>
         </div>
         <div class="card-body">
           <table id="reservationsTable" class="table table-dark table-striped text-center">
@@ -160,20 +157,3 @@
     </div>
   </div>
 </div>
-
-<script>
-document.querySelectorAll('.reserve-place-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var row = this.getAttribute('data-row');
-    var place = this.getAttribute('data-place');
-    var code = row + place;
-    document.getElementById('modalplaceCode').textContent = code;
-    document.getElementById('reserveNumPlace').value = code;
-    document.getElementById('nom').value = '';
-    document.getElementById('prenom').value = '';
-    var modalEl = document.getElementById('reserveModal');
-    var modal = new bootstrap.Modal(modalEl);
-    modal.show();
-  });
-});
-</script>

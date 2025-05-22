@@ -83,39 +83,3 @@
         </div>
     </div>
 </div>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const rows = <?= json_encode($rows) ?>;
-    const placeRanges = document.getElementById('placeRanges');
-    const addRangeBtn = document.getElementById('addRangeBtn');
-
-    const updateEndOptions = select => {
-        const endSelect = select.closest('.range-block').querySelector('select[name="rowEnd[]"]');
-        endSelect.innerHTML = '<option value="">Sélectionner</option>';
-        const idx = rows.indexOf(select.value);
-        if (idx >= 0) rows.slice(idx).forEach(r => endSelect.add(new Option(r, r)));
-    };
-
-    placeRanges.addEventListener('change', e => {
-        if (e.target.name === 'rowStart[]') updateEndOptions(e.target);
-    });
-
-    addRangeBtn.addEventListener('click', () => {
-        const first = placeRanges.querySelector('.range-block');
-        const newBlk = first.cloneNode(true);
-        newBlk.querySelectorAll('input, select').forEach(el => el.value = '');
-        newBlk.querySelector('select[name="rowEnd[]"]').innerHTML = '<option value="">Sélectionner</option>';
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.className = 'btn btn-outline-danger removeRangeBtn mb-3';
-        removeBtn.textContent = 'Retirer cette fourchette';
-        newBlk.append(removeBtn);
-        placeRanges.append(newBlk);
-    });
-    placeRanges.addEventListener('click', e => {
-        if (e.target.classList.contains('removeRangeBtn')) {
-            e.target.closest('.range-block').remove();
-        }
-    });
-});
-</script>
