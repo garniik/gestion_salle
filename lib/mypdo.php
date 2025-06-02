@@ -8,11 +8,11 @@ $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__) . '/../');
 $dotenv->load();
 
 // Récupération des informations présentes dans le fichier de conf .env
-$db_host = $_ENV['DB_HOST'];
-$db_name = $_ENV['DB_NAME'];
-$db_port = $_ENV['DB_PORT'];
-$db_username = $_ENV['DB_USER'];
-$db_password = $_ENV['DB_PASS'];
+$db_host = getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? '');
+$db_name = getenv('DB_NAME') ?: ($_ENV['DB_NAME'] ?? '');
+$db_port = getenv('DB_PORT') ?: ($_ENV['DB_PORT'] ?? '');
+$db_username = getenv('DB_USER') ?: ($_ENV['DB_USER'] ?? '');
+$db_password = getenv('DB_PASS') ?: ($_ENV['DB_PASS'] ?? '');
 
 if (
     empty($db_host)

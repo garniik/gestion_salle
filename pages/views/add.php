@@ -42,8 +42,8 @@
                         <div id="placeRanges">
                             <div class="row range-block">
                                 <div class="col mb-3">
-                                    <label class="form-label">Rangée de début <span class="text-danger">*</span></label>
-                                    <select class="form-control bg-dark text-light border-secondary" name="rowStart[]" required>
+                                    <label for="rowStart_0" class="form-label">Rangée de début <span class="text-danger">*</span></label>
+                                    <select id="rowStart_0" class="form-control bg-dark text-light border-secondary" name="rowStart[]" required>
                                         <option value="">Sélectionner</option>
                                         <?php foreach($rows as $r): ?>
                                             <option value="<?= $r ?>"><?= $r ?></option>
@@ -52,13 +52,13 @@
                                     <div class="invalid-feedback">Veuillez sélectionner la rangée de début.</div>
                                 </div>
                                 <div class="col mb-3">
-                                    <label class="form-label">N° place début <span class="text-danger">*</span></label>
-                                     <input type="number" class="form-control bg-dark text-light border-secondary" name="minPlace[]" required>
+                                    <label for="minPlace_0" class="form-label">N° place début <span class="text-danger">*</span></label>
+                                     <input id="minPlace_0" type="number" class="form-control bg-dark text-light border-secondary" name="minPlace[]" required>
                                      <div class="invalid-feedback">Veuillez entrer le numéro de place de début.</div>
                                  </div>
                                  <div class="col mb-3">
-                                     <label class="form-label">Rangée de fin <span class="text-danger">*</span></label>
-                                     <select class="form-control bg-dark text-light border-secondary" name="rowEnd[]" required>
+                                     <label for="rowEnd_0" class="form-label">Rangée de fin <span class="text-danger">*</span></label>
+                                     <select id="rowEnd_0" class="form-control bg-dark text-light border-secondary" name="rowEnd[]" required>
                                         <option value="">Sélectionner</option>
                                         <?php foreach($rows as $r): ?>
                                             <option value="<?= $r ?>"><?= $r ?></option>
@@ -67,8 +67,8 @@
                                     <div class="invalid-feedback">Veuillez sélectionner la rangée de fin.</div>
                                 </div>
                                 <div class="col mb-3">
-                                     <label class="form-label">N° place fin <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control bg-dark text-light border-secondary" name="maxPlace[]" required>
+                                     <label for="maxPlace_0" class="form-label">N° place fin <span class="text-danger">*</span></label>
+                                    <input id="maxPlace_0" type="number" class="form-control bg-dark text-light border-secondary" name="maxPlace[]" required>
                                     <div class="invalid-feedback">Veuillez entrer le numéro de place de fin.</div>
                                 </div>
                             </div>
@@ -83,3 +83,100 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const rows = <?= json_encode($rows) ?>;
+    const placeRanges = document.getElementById('placeRanges');
+    const addRangeBtn = document.getElementById('addRangeBtn');
+
+    // Fonction pour mettre à jour les options du menu de droite
+    function updateEndOptions(select) {
+        const block = select.closest('.range-block');
+        const endSelect = block.querySelector('select[name="rowEnd[]"]');
+        if (!endSelect) return;
+        
+
+        const currentValue = endSelect.value;
+        
+        endSelect.innerHTML = '<option value="">Sélectionner</option>';
+        
+
+        const selectedValue = select.value;
+        if (selectedValue) {
+            const startIndex = rows.indexOf(selectedValue);
+            if (startIndex >= 0) {
+
+                for (let i = startIndex; i < rows.length; i++) {
+                    const option = document.createElement('option');
+                    option.value = rows[i];
+                    option.textContent = rows[i];
+                    endSelect.appendChild(option);
+                }
+                
+
+                if (currentValue) {
+                    const remainingOptions = Array.from(endSelect.options).map(opt => opt.value);
+                    if (remainingOptions.includes(currentValue)) {
+                        endSelect.value = currentValue;
+                    }
+                }
+            }
+        }
+    }
+
+    function setupRangeBlock(block) {
+        const startSelect = block.querySelector('select[name="rowStart[]"]');
+        if (startSelect) {
+            const newStartSelect = startSelect.cloneNode(true);
+            startSelect.parentNode.replaceChild(newStartSelect, startSelect);
+            
+            newStartSelect.addEventListener('change', function() {
+                updateEndOptions(this);
+            });
+
+            if (newStartSelect.value) {
+                updateEndOptions(newStartSelect);
+            }
+        }
+    }
+
+    document.querySelectorAll('.range-block').forEach(setupRangeBlock);
+
+    addRangeBtn.addEventListener('click', () => {
+        const first = placeRanges.querySelector('.range-block');
+        if (!first) return;
+        
+        const newBlk = first.cloneNode(true);
+
+        newBlk.querySelectorAll('input, select').forEach(el => {
+            el.value = '';
+            if (el.name === 'rowEnd[]') {
+                el.innerHTML = '<option value="">Sélectionner</option>';
+            }
+        });
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn btn-outline-danger btn-sm mt-2';
+        removeBtn.textContent = 'Supprimer cette fourchette';
+        removeBtn.onclick = function() {
+            const allBlocks = document.querySelectorAll('.range-block');
+            if (allBlocks.length > 1) {
+                newBlk.remove();
+            } else {
+                alert('Au moins une fourchette doit être définie');
+            }
+        };
+        
+
+        placeRanges.appendChild(newBlk);
+        
+
+        setupRangeBlock(newBlk);
+        
+
+        newBlk.querySelector('.col:last-child').appendChild(removeBtn);
+    });
+});
+</script>

@@ -26,7 +26,7 @@
         $zones = [
             'Gradins' => ['rows' => ['X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F'], 'place' => 22],
             'Chaises' => ['rows' => ['E5', 'E4', 'E3', 'E2'], 'place' => 25],
-            'Fosse' => ['rows' => ['E1', 'D ', 'C', 'B', 'A'], 'place' => 22],
+            'Fosse' => ['rows' => ['E1', 'D', 'C', 'B', 'A'], 'place' => 22],
         ];
         $reservedPlaces = array_column($evenement->getReservation($eventid), 'numPlace');
         foreach ($zones as $zoneName => $zone): ?>
@@ -76,6 +76,11 @@
         <div class="card-header d-flex justify-content-between align-items-center">
           <h2 class="mb-0">Listes des reservations</h2>
           <div class="d-flex">
+            <form method="POST" class="me-2">
+              <input type="hidden" name="downloadPdf" value="1">
+              <input type="hidden" name="eventid" value="<?= $event['eventid'] ?>">
+              <button type="submit" class="btn btn-success">Télécharger PDF du plan</button>
+            </form>
             <input id="reservation-search" class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
           </div>
         </div>
