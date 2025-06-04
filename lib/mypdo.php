@@ -14,15 +14,6 @@ $db_port = getenv('DB_PORT') ?: ($_ENV['DB_PORT'] ?? '');
 $db_username = getenv('DB_USER') ?: ($_ENV['DB_USER'] ?? '');
 $db_password = getenv('DB_PASS') ?: ($_ENV['DB_PASS'] ?? '');
 
-if (
-    empty($db_host)
-    || empty($db_name)
-    || empty($db_username)
-    || empty($db_password)
-) {
-    $_SESSION['mesgs']['errors'][] = 'ERREUR Configuration: les informations n\'ont pas pu être chargées.';
-}
-
 // ouverture de la connexion
 $dsn = "mysql:host=$db_host;dbname=$db_name";
 if (!empty($db_port)) {

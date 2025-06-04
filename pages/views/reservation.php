@@ -3,16 +3,26 @@
   <div class="row">
     <div class="col-12">
       <div class="card bg-dark text-light border-secondary mb-4">
-        <div class="card-body   ">
+      
           <h5 class="card-title"><?= $event['nom']; ?></h5>
           <p class="card-text"><?= $event['jour']; ?></p>
           <p class="card-text">Prix place : <?= htmlspecialchars($event['prix'] ?? 0) ?> €</p>
           <p class="card-text">Total collecté : <?= htmlspecialchars(number_format((count($reservations) * ($event['prix'] ?? 0)), 2, ',', ' ')) ?> €</p>
           <td>
+          <form method="POST" class="me-2">
+              <input type="hidden" name="downloadPdf" value="1">
+              <input type="hidden" name="eventid" value="<?= $event['eventid'] ?>">
+              <button type="submit" class="btn btn-success">Télécharger PDF du plan</button>
+            </form>
             <form method="POST"  onsubmit="return confirm('Voulez-vous vraiment supprimer cette evenement ?');">
               <input type="hidden" name="delete_id" value="<?= $event['eventid'] ?>">
               <button type="submit" name="deleteEvent" class="btn btn-danger">Supprimer</button>
+              
+        <div class="card-body   ">
+          
             </form>
+            
+            
           </td>
         </div>
       </div>
@@ -76,11 +86,6 @@
         <div class="card-header d-flex justify-content-between align-items-center">
           <h2 class="mb-0">Listes des reservations</h2>
           <div class="d-flex">
-            <form method="POST" class="me-2">
-              <input type="hidden" name="downloadPdf" value="1">
-              <input type="hidden" name="eventid" value="<?= $event['eventid'] ?>">
-              <button type="submit" class="btn btn-success">Télécharger PDF du plan</button>
-            </form>
             <input id="reservation-search" class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
           </div>
         </div>

@@ -44,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['downloadPdf'])) {
     $html = '<html><head><meta charset="utf-8"><style>
         table{width:100%;border-collapse:collapse;}th,td{border:1px solid #000;padding:3px;text-align:center;}
         .reserved{background:#f88;} .unavailable{background:#ccc;} .available{background:#8f8;}
+        h2 { page-break-after: avoid; }
+        .no-page-break { page-break-inside: avoid; }
     </style></head><body>';
     // infos événement
     $html .= '<h1>' . htmlspecialchars($event['nom']) . '</h1>';
@@ -76,17 +78,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['downloadPdf'])) {
     // terminer section plan
     $html .= '</body>';
     // ajouter liste des réservations
+    $html .= '<div class="no-page-break">';
     $html .= '<h2>Liste des réservations</h2>';
     $html .= '<table style="width:100%;border-collapse:collapse;"><thead><tr><th>Nom</th><th>Prénom</th><th>Téléphone</th><th>Email</th><th>Adresse</th><th>Place</th></tr></thead><tbody>';
     foreach ($reservationsList as $res) {
         $html .= '<tr><td>' . htmlspecialchars($res['nom']) . '</td><td>' . htmlspecialchars($res['prenom']) . '</td><td>' . htmlspecialchars($res['telephone']) . '</td><td>' . htmlspecialchars($res['email']) . '</td><td>' . htmlspecialchars($res['adresse']) . '</td><td>' . htmlspecialchars($res['numPlace']) . '</td></tr>';
     }
-    $html .= '</tbody></table></html>';
+    $html .= '</tbody></table></div></html>';
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'landscape');
     $dompdf->render();
     $dompdf->stream('plan_event_' . $event['eventid'] . '.pdf', ['Attachment' => true]);
-    exit;
 }
 
 if (isset($_POST['titre']) && !empty($_POST['titre'])) {
