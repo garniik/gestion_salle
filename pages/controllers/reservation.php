@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['downloadPdf'])) {
      * @param int $place Numéro de la place
      * @param string $code Code complet de la place (ex: "A1")
      * @param array $reservedPlaces Liste des places réservées
-     * @param string $fourchette Plage de places disponibles
+     * @param string $fourchette fourchette de places disponibles
      * @return string Classe CSS à appliquer
      */
     function getPlaceStatus($zoneName, $row, $place, $code, $reservedPlaces, $fourchette) {
@@ -232,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['downloadPdf'])) {
             <h2>Informations générales</h2>
             <p><strong>Date :</strong> ' . htmlspecialchars($event['jour']) . '</p>
             <p><strong>Prix par place :</strong> ' . htmlspecialchars($event['prix']) . ' €</p>
-            <p><strong>Plages horaires :</strong> ' . htmlspecialchars($event['fourchette']) . '</p>
+            <p><strong>Fourchette places :</strong> ' . htmlspecialchars($event['fourchette']) . '</p>
             <p><strong>Nombre de places réservées :</strong> ' . count($reservationsList) . '</p>
         </div>
     </div>';

@@ -1,55 +1,21 @@
-## Gestionaire de salle dans le but d'un projet de stage 
+# 🏢 Gestionnaire de Salle d'Événements
 
+## 📋 Description
+Application web de gestion de réservation de salles pour événements. Cette application permet de créer des événements, gérer les places disponibles et effectuer des réservations de manière intuitive.
 
-## objectifs:
-- creation evenement
-    - nom de l'evenement
-    - date
-    - place disponible
+## ✨ Fonctionnalités
 
-- affichage card d'evements en grille cliquable :
-    -  nom de l'evenement
-    - date
-    - place disponible 
+### 📅 Gestion des Événements
+- Création et édition d'événements
+- Affichage des événements sous forme de cartes cliquables
+- Gestion des places disponibles
 
+### 🎟️ Système de Réservation
+- Visualisation des places disponibles
+- Réservation de places
+- Recherche de réservations par nom, prénom ou numéro de place
 
-- affichage de la salle et les place disponible
-    - affichage des places reservé
-    - cliquer sur une place
-        - nom prenom reservation
-    - barre de recherche place (par nom/prenom ou N° place)
-
-
-
-
-## methodes possibles :
-- web (php model mvc)
-    - base de donnée
-
-
-## basse de donnée : 
-- evenement
-    - id
-    - nom
-    - date
-    - place disponible
-
-- place
-    - id
-    - N° place
-    - nom
-    - prenom
-    - id evenement
-
-
-## soucis a reglé :
-- liste reservation 
-    - si chercher place alors pas de resultat
-- reservation:
-    - num tel 
-    - adresse email
-    - adresse
-- evenement :
-    - prix reservation 
-    - argent total place prise (card)
-    
+## 🛠️ Technologies Utilisées
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Backend**: PHP (MVC)
+- **Base de Données**: MySQL
